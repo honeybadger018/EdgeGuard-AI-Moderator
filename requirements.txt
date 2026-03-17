@@ -1,0 +1,12 @@
+# Core Machine Learning Frameworks
+torch
+transformers
+accelerate
+bitsandbytes
+sentence-transformers
+
+# Vector Search
+faiss-cpu
+
+# Note: If you are running this on a machine with a powerful NVIDIA GPU,
+# you may prefer 'faiss-gpu' instead of 'faiss-cpu' for faster search.
