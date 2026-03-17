@@ -41,7 +41,7 @@ EdgeGuard AI is built on a highly optimized, cascaded inference pipeline:
 
 ```mermaid
 graph TD
-    A[Incoming UGC] --> B[Classification Pipeline <br/> DistilBERT]
+    A[Incoming UGC(user generated content)] --> B[Classification Pipeline <br/> DistilBERT]
     A -.->|Data Ingestion| C[(FAISS Vector DB)]
     B -->|Flagged as Toxic| D[Semantic Search <br/> Vector Embeddings]
     D -->|KNN Search| C
