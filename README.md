@@ -35,16 +35,26 @@ EdgeGuard AI utilizes a cascaded architecture (`DistilBERT Classifier` ➡️ `F
 
 ---
 
-## 🏗️ Architecture Flow
-
-EdgeGuard AI is built on a highly optimized, cascaded inference pipeline:
+### System Architecture
 
 ```mermaid
 graph TD
-    A[Incoming User-Generated Content] --> B[Classification Pipeline <br/> DistilBERT]
+    A[Incoming User-Generated Content] --> B[Classification Pipeline <br/> RoBERTa]
     A -.->|Data Ingestion| C[(FAISS Vector DB)]
     B -->|Flagged as Toxic| D[Semantic Search <br/> Vector Embeddings]
     D -->|KNN Search| C
     C --> E{Context Check}
     E -->|History of Offenses| F[Context-Aware Inference <br/> Quantized LLM]
     F --> G[Generate Strict, Contextual Warning]
+```
+
+<details>
+<summary><b>Click here to read the detailed step-by-step breakdown</b></summary>
+<br>
+<ul>
+<li><b>Classification Pipeline:</b> Incoming User-Generated Content is tokenized and processed by a fine-tuned binary classifier (RoBERTa) to output toxicity probability scores in real-time.</li>
+<li><b>Data Ingestion:</b> All content is projected into vector space and indexed into a local FAISS vector store to facilitate downstream retrieval.</li>
+<li><b>Semantic Search:</b> If content is flagged as toxic, it is transformed into high-dimensional vector embeddings. A K-Nearest Neighbor (KNN) semantic search is performed against the FAISS database to retrieve historical behavioral data for the specific user.</li>
+<li><b>Context-Aware Inference:</b> If a history of repeated offenses is found, the current comment and retrieved historical context are passed into a Quantized LLM to perform inference and generate a strict, contextualized warning.</li>
+</ul>
+</details>
